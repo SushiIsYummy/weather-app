@@ -1,0 +1,28 @@
+.forecast-weather-display {
+  padding: 10px;
+}
+
+.forecast-day {
+  display: flex;
+  align-items: center;
+}
+
+.forecast-day .weather-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.forecast-day .temperature,
+.forecast-day .day-of-week {
+  flex: 1;
+  font-size: 1.3rem;
+}
+
+.forecast-day .temperature {
+  text-align: end;
+}
+
+.forecast-day .day-of-week {
+  flex: 2;
+}

@@ -1,0 +1,30 @@
+.search-bar {
+  display: flex;
+}
+
+.search-icon {
+  border: none;
+  border-radius: 50%;
+  background-color: gray;
+  display: inline;
+  width: 30px;
+  height: 30px;
+}
+
+.search-input {
+  font-size: 1rem;
+  padding: 3px;
+  border-radius: 10px;
+}
+
+.current-weather-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 30px;
+}
+
+.current-weather-display .temperature {
+  font-size: 4rem;
+}
