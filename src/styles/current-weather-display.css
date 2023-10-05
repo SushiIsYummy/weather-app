@@ -27,4 +27,29 @@
 
 .current-weather-display .temperature {
   font-size: 4rem;
+  line-height: 4rem;
+}
+
+.toggle-degrees {
+  border: none;
+  background-color: transparent;
+}
+
+.toggle-degrees .C,
+.toggle-degrees .F {
+  cursor: pointer;
+  color: #70757a;
+  /* color: rgba(0, 0, 0, 0.1); */
+}
+
+.toggle-degrees .C.active,
+.toggle-degrees .F.active {
+  /* font-weight: bold; */
+  cursor: default;
+  color: black;
+}
+
+.current-weather-display .vertical-bar {
+  border-left: 1px solid black;
+  margin: 0px 5px;
 }

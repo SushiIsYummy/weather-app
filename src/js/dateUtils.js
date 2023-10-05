@@ -5,7 +5,7 @@ export function convertDateToDayOfWeek(date) {
   return dayOfWeek;
 }
 
-export function formatTime(timeString) {
+export function formatTimeHourOnly(timeString) {
   const [hourString] = timeString.split(':');
   const hour = +hourString % 24;
   return `${hour % 12 || 12}${hour < 12 ? 'AM' : 'PM'}`;

@@ -17,10 +17,6 @@ export async function fetchWeatherData(searchInput) {
   }
 }
 
-export function horse() {
-  return 0;
-}
-
 export async function getImagePathBasedOnCode(code, day) {
   const response = await fetch('./json/weather_conditions.json');
   const json = await response.json();
