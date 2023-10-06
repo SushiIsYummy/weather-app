@@ -1,3 +1,10 @@
+.search-bar-and-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
 .search-bar {
   display: flex;
 }
@@ -5,7 +12,7 @@
 .search-icon {
   border: none;
   border-radius: 50%;
-  background-color: gray;
+  background-color: rgb(180, 173, 173);
   display: inline;
   width: 30px;
   height: 30px;
@@ -13,8 +20,19 @@
 
 .search-input {
   font-size: 1rem;
-  padding: 3px;
+  padding: 5px;
   border-radius: 10px;
+  border: 2px solid black;
+  outline: none;
+}
+
+.search-input.error {
+  border-color: red;
+}
+
+.search-error.active {
+  color: red;
+  text-align: center;
 }
 
 .current-weather-display {
@@ -25,9 +43,17 @@
   padding: 30px;
 }
 
+.current-weather-display .city {
+  text-align: center;
+}
+
 .current-weather-display .temperature {
   font-size: 4rem;
   line-height: 4rem;
+}
+
+.current-weather-display .forecast-condition {
+  text-align: center;
 }
 
 .toggle-degrees {
@@ -39,12 +65,10 @@
 .toggle-degrees .F {
   cursor: pointer;
   color: #70757a;
-  /* color: rgba(0, 0, 0, 0.1); */
 }
 
 .toggle-degrees .C.active,
 .toggle-degrees .F.active {
-  /* font-weight: bold; */
   cursor: default;
   color: black;
 }

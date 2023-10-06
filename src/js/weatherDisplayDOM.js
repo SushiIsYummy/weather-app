@@ -8,14 +8,19 @@ const currentWeatherTemps = {};
 const hourlyWeatherTemps = {};
 const forecastWeatherTemps = {};
 
-export async function changeWeatherDisplayData(searchInput) {
-  // const searchInput = document.querySelector('.search-input');
-  const weatherData = await fetchWeatherData(searchInput);
+export async function changeWeatherDisplayData(searchInputValue) {
+  const weatherData = await fetchWeatherData(searchInputValue);
   const temperatureUnit = getTemperatureUnitLS();
 
+  if (weatherData === null) {
+    displaySearchError();
+    return;
+  }
+
   if (weatherData !== null) {
+    hideSearchError();
     savedWeatherData = weatherData;
-    setPreviousLocationLS(searchInput);
+    setPreviousLocationLS(searchInputValue);
     changeCurrentWeather(weatherData, temperatureUnit);
     changeTodayHourlyWeather(weatherData, temperatureUnit);
     changeCurrentForecastWeather(weatherData, temperatureUnit);
@@ -179,6 +184,23 @@ function changeForecastWeatherUnit(temperatureUnit) {
   [...forecastTemperatureValues].forEach((temperatureValue, i) => {
     temperatureValue.textContent = forecastWeatherTemps[temperatureUnit][i];
   });
+}
+
+function displaySearchError() {
+  const searchError = document.querySelector('.search-error');
+  const searchInput = document.querySelector('.search-input');
+
+  searchInput.classList.add('error');
+  searchError.classList.add('active');
+  searchError.textContent = 'Location not found. Please search for another location.';
+}
+
+function hideSearchError() {
+  const searchError = document.querySelector('.search-error');
+  const searchInput = document.querySelector('.search-input');
+  searchInput.classList.remove('error');
+  searchError.classList.remove('active');
+  searchError.textContent = '';
 }
 
 function clearDisplay(displayElement) {
