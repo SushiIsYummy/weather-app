@@ -1,10 +1,17 @@
 .forecast-weather-display {
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .forecast-day {
   display: flex;
   align-items: center;
+  flex: 1;
+
+  background-color: rgb(221, 212, 212, 0.5);
+  border-radius: 10px;
+  padding: 5px;
 }
 
 .forecast-day .weather-image-container {
@@ -25,4 +32,30 @@
 
 .forecast-day .day-of-week {
   flex: 2;
+}
+
+@media (min-width: 740px) {
+  .forecast-weather-display {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .forecast-day {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .forecast-day .day-of-week,
+  .forecast-day .temperature-value {
+    font-size: 1.8rem;
+  }
+
+  .forecast-day .weather-image {
+    width: 100px;
+    height: 100px;
+  }
 }
