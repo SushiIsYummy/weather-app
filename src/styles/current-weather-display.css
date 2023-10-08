@@ -40,20 +40,27 @@
   flex-direction: column;
   align-items: center;
 
-  padding: 30px;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 10px 0px;
+  /* background-color: rgb(221, 212, 212, 0.4); */
 }
 
 .current-weather-display .city {
   text-align: center;
+  color: white;
 }
 
 .current-weather-display .temperature {
   font-size: 4rem;
   line-height: 4rem;
+  color: white;
 }
 
 .current-weather-display .forecast-condition {
   text-align: center;
+  margin-top: 5px;
+  color: white;
 }
 
 .toggle-degrees {
@@ -64,13 +71,14 @@
 .toggle-degrees .C,
 .toggle-degrees .F {
   cursor: pointer;
-  color: #70757a;
+  /* color: #5c5d5e; */
+  color: rgb(116, 116, 116);
 }
 
 .toggle-degrees .C.active,
 .toggle-degrees .F.active {
   cursor: default;
-  color: black;
+  color: white;
 }
 
 .current-weather-display .vertical-bar {

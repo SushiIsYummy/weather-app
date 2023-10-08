@@ -1,5 +1,3 @@
-import { DateTime } from 'luxon';
-
 export async function fetchWeatherData(searchInput) {
   try {
     // `https://api.weatherapi.com/v1/current.json?key=d965eb8a607d4371a5230012230310&q=${searchInput}`

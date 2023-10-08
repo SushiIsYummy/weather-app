@@ -1,0 +1,34 @@
+.additional-weather-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  padding: 10px;
+  background-color: rgb(230, 221, 221, 0.2);
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.additional-weather-info .weather-info {
+  background-color: rgb(221, 212, 212, 0.4);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+@media (min-width: 1200px) {
+  .additional-weather-info {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .additional-weather-info .weather-info {
+    text-align: center;
+  }
+
+  .additional-weather-info h1 {
+    font-size: 2rem;
+  }
+
+  .additional-weather-info p {
+    font-size: 2rem;
+  }
+}

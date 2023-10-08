@@ -1,12 +1,11 @@
-import { DateTime } from 'luxon';
 import { fetchWeatherData, getImagePathBasedOnCode } from './api';
 import { convertDateToDayOfWeek, formatTimeHourOnly } from './dateUtils';
 import { getTemperatureUnitLS, setPreviousLocationLS } from './localStorage';
 
-let savedWeatherData = '';
 const currentWeatherTemps = {};
 const hourlyWeatherTemps = {};
 const forecastWeatherTemps = {};
+const additionalWeatherInfoTemps = {};
 
 export async function changeWeatherDisplayData(searchInputValue) {
   const weatherData = await fetchWeatherData(searchInputValue);
@@ -19,11 +18,11 @@ export async function changeWeatherDisplayData(searchInputValue) {
 
   if (weatherData !== null) {
     hideSearchError();
-    savedWeatherData = weatherData;
     setPreviousLocationLS(searchInputValue);
     changeCurrentWeather(weatherData, temperatureUnit);
     changeTodayHourlyWeather(weatherData, temperatureUnit);
     changeCurrentForecastWeather(weatherData, temperatureUnit);
+    changeAdditionalWeatherInfo(weatherData, temperatureUnit);
   }
 }
 
@@ -42,7 +41,7 @@ function changeCurrentWeather(weatherData, temperatureUnit) {
 }
 
 function changeTodayHourlyWeather(weatherData, temperatureUnit) {
-  const hourlyWeatherDisplay = document.querySelector('.today-hourly-weather');
+  const hourlyWeatherDisplay = document.querySelector('.today-hourly-weather .weather-info');
   const [dateToday, timeNow] = weatherData.location.localtime.split(' ');
   const hourlyWeatherToday = weatherData.forecast.forecastday.find((item) => item.date === dateToday);
   const hours = hourlyWeatherToday.hour;
@@ -104,7 +103,7 @@ function createHourlyWeatherElement(time, conditionCode, isDay, temperature) {
 }
 
 function changeCurrentForecastWeather(weatherData, temperatureUnit) {
-  const forecastWeatherDisplay = document.querySelector('.forecast-weather-display');
+  const forecastWeatherDisplay = document.querySelector('.forecast-weather-display .weather-info');
   const forecastDays = weatherData.forecast.forecastday;
   // remove today's forecast
   forecastDays.shift();
@@ -165,6 +164,7 @@ export function changeTemperatureUnit(temperatureUnit) {
   changeCurrentWeatherUnit(temperatureUnit);
   changeTodayHourlyWeatherUnit(temperatureUnit);
   changeForecastWeatherUnit(temperatureUnit);
+  changeAdditionalWeatherInfoUnits(temperatureUnit);
 }
 
 function changeCurrentWeatherUnit(temperatureUnit) {
@@ -184,6 +184,73 @@ function changeForecastWeatherUnit(temperatureUnit) {
   [...forecastTemperatureValues].forEach((temperatureValue, i) => {
     temperatureValue.textContent = forecastWeatherTemps[temperatureUnit][i];
   });
+}
+
+function changeAdditionalWeatherInfoUnits(temperatureUnit) {
+  const additionalWeatherInfo = document.querySelector('.additional-weather-info');
+
+  [...additionalWeatherInfo.children].forEach((item) => {
+    const infoHeader = item.querySelector('h1');
+    const propertyName = infoHeader.textContent.toLowerCase().replaceAll(' ', '_');
+    if (Object.prototype.hasOwnProperty.call(additionalWeatherInfoTemps, propertyName)) {
+      const infoValue = item.querySelector('p');
+      infoValue.textContent = additionalWeatherInfoTemps[propertyName][temperatureUnit];
+    }
+  });
+}
+
+function createSingleAdditionalWeatherInfo(infoName, infoValue, unitValue = '', spaceBetween = false) {
+  const container = document.createElement('div');
+  container.classList.add('weather-info');
+  const infoClassName = infoName.toLowerCase().replaceAll(' ', '-');
+  container.classList.add(infoClassName);
+
+  const header = document.createElement('h1');
+  header.textContent = infoName;
+
+  const value = document.createElement('p');
+  if (unitValue !== '' && spaceBetween) {
+    value.textContent = `${infoValue} ${unitValue}`;
+  } else if (unitValue !== '' && !spaceBetween) {
+    value.textContent = `${infoValue}${unitValue}`;
+  } else {
+    value.textContent = infoValue;
+  }
+
+  container.append(header, value);
+  return container;
+}
+
+function changeAdditionalWeatherInfo(weatherData, temperatureUnit) {
+  const additionalWeatherInfo = document.querySelector('.additional-weather-info');
+  const windSpeedUnit = temperatureUnit === 'temp_c' ? 'km/h' : 'mph';
+  const windSpeedProperty = temperatureUnit === 'temp_c' ? 'wind_kph' : 'wind_mph';
+  const feelsLikeTempProperty = temperatureUnit === 'temp_c' ? 'feelslike_c' : 'feelslike_f';
+
+  clearDisplay(additionalWeatherInfo);
+
+  const feelsLikeValues = {};
+  feelsLikeValues.temp_c = `${weatherData.current.feelslike_c}°`;
+  feelsLikeValues.temp_f = `${weatherData.current.feelslike_f}°`;
+
+  const windSpeedValues = {};
+  windSpeedValues.temp_c = `${weatherData.current.wind_kph} km/h`;
+  windSpeedValues.temp_f = `${weatherData.current.wind_mph} mph`;
+
+  additionalWeatherInfoTemps.feels_like = feelsLikeValues;
+  additionalWeatherInfoTemps.wind_speed = windSpeedValues;
+
+  const feelsLikeValue = weatherData.current[feelsLikeTempProperty];
+  const feelsLike = createSingleAdditionalWeatherInfo('Feels Like', feelsLikeValue, '°');
+  const humidityValue = weatherData.current.humidity;
+  const humidity = createSingleAdditionalWeatherInfo('Humidity', humidityValue, '%');
+  const chanceOfRainValue = weatherData.forecast.forecastday[0].day.daily_chance_of_rain;
+  const chanceOfRain = createSingleAdditionalWeatherInfo('Chance Of Rain', chanceOfRainValue, '%');
+  const windSpeedValue = weatherData.current[windSpeedProperty];
+  const windSpeed = createSingleAdditionalWeatherInfo('Wind Speed', windSpeedValue, windSpeedUnit, true);
+
+  additionalWeatherInfo.append(feelsLike, humidity, chanceOfRain, windSpeed);
+  console.log(additionalWeatherInfoTemps);
 }
 
 function displaySearchError() {

@@ -1,5 +1,3 @@
-import { fetchWeatherData } from './api';
-
 export function setTemperatureUnitLS(temperatureUnit = 'temp_c') {
   if (temperatureUnit !== 'temp_c' && temperatureUnit !== 'temp_f') {
     return;

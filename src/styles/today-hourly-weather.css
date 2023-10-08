@@ -1,10 +1,29 @@
 .today-hourly-weather {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background-color: rgba(230, 221, 221, 0.2);
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.today-hourly-weather h1 {
+  font-size: 0.9rem;
+  background-color: rgb(221, 212, 212, 0.5);
+  border-radius: 5px;
+  padding: 5px;
+  width: fit-content;
+}
+
+.today-hourly-weather .weather-info {
+  display: flex;
   justify-content: space-between;
   gap: 10px;
+
   width: 100%;
   overflow-x: auto;
-  padding: 10px 0;
+  border-radius: 10px;
 }
 
 .today-hourly-weather .hourly-weather {
@@ -15,4 +34,8 @@
   background-color: rgb(221, 212, 212, 0.5);
   border-radius: 10px;
   padding: 5px;
+}
+
+.today-hourly-weather .bar-divider {
+  border-bottom: 1px solid rgb(214, 205, 205);
 }
