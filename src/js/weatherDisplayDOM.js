@@ -61,8 +61,6 @@ function changeTodayHourlyWeather(weatherData, temperatureUnit) {
 
   hourlyWeatherTemps.temp_c = [...celsius];
   hourlyWeatherTemps.temp_f = [...fahrenheit];
-
-  console.log(hourlyWeatherTemps);
 }
 
 function createHourlyWeatherElement(time, conditionCode, isDay, temperature) {
@@ -106,13 +104,14 @@ function changeCurrentForecastWeather(weatherData, temperatureUnit) {
   const forecastWeatherDisplay = document.querySelector('.forecast-weather-display .weather-info');
   const forecastDays = weatherData.forecast.forecastday;
   // remove today's forecast
-  forecastDays.shift();
+  const forecastDaysShifted = [...forecastDays];
+  forecastDaysShifted.shift();
   const maxtemp = `max${temperatureUnit}`;
   const celsius = [];
   const fahrenheit = [];
 
   clearDisplay(forecastWeatherDisplay);
-  forecastDays.forEach((forecastDay) => {
+  forecastDaysShifted.forEach((forecastDay) => {
     forecastWeatherDisplay.appendChild(createForecastDayElement(forecastDay.date, forecastDay.day[maxtemp], forecastDay.day.condition.code));
     celsius.push(forecastDay.day.maxtemp_c);
     fahrenheit.push(forecastDay.day.maxtemp_f);
@@ -120,8 +119,6 @@ function changeCurrentForecastWeather(weatherData, temperatureUnit) {
 
   forecastWeatherTemps.temp_c = [...celsius];
   forecastWeatherTemps.temp_f = [...fahrenheit];
-
-  console.log(forecastDays);
 }
 
 function createForecastDayElement(date, temperature, conditionCode) {
@@ -160,7 +157,6 @@ function createForecastDayElement(date, temperature, conditionCode) {
 }
 
 export function changeTemperatureUnit(temperatureUnit) {
-  console.log('temperature unit changed!');
   changeCurrentWeatherUnit(temperatureUnit);
   changeTodayHourlyWeatherUnit(temperatureUnit);
   changeForecastWeatherUnit(temperatureUnit);
@@ -250,7 +246,6 @@ function changeAdditionalWeatherInfo(weatherData, temperatureUnit) {
   const windSpeed = createSingleAdditionalWeatherInfo('Wind Speed', windSpeedValue, windSpeedUnit, true);
 
   additionalWeatherInfo.append(feelsLike, humidity, chanceOfRain, windSpeed);
-  console.log(additionalWeatherInfoTemps);
 }
 
 function displaySearchError() {
