@@ -13,7 +13,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
-  mode: 'development',
+  mode: 'production',
   module: {
     rules: [
       // {
@@ -119,7 +119,7 @@ module.exports = {
     ],
     minimize: true,
   },
-  devtool: 'inline-source-map',
+  // devtool: 'inline-source-map',
   devServer: {
     open: true, // Automatically open the default web browser
     // hot: true,
