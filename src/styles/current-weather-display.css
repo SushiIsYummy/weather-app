@@ -43,7 +43,6 @@
   padding: 15px;
   border-radius: 10px;
   margin: 10px 0px;
-  /* background-color: rgb(221, 212, 212, 0.4); */
 }
 
 .current-weather-display .city {
@@ -71,7 +70,6 @@
 .toggle-degrees .C,
 .toggle-degrees .F {
   cursor: pointer;
-  /* color: #5c5d5e; */
   color: rgb(116, 116, 116);
 }
 
